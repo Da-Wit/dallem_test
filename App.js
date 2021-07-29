@@ -1,19 +1,12 @@
-// import "react-native-gesture-handler";
 import React from "react";
-import { StyleSheet, View } from "react-native";
-// import { NavigationContainer } from "@react-navigation/native";
-import Home from "./src/pages/home";
-// import Nav from "./src/nav";
+import { StyleSheet } from "react-native";
+import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import BottomNav from "./src/bottom_nav";
+
+const Tab = createMaterialBottomTabNavigator();
 
 export default function App() {
-  return (
-    // <NavigationContainer>
-    <View style={styles.container}>
-      <Home />
-      {/* <Nav /> */}
-    </View>
-    // </NavigationContainer>
-  );
+  return <BottomNav />;
 }
 
 const styles = StyleSheet.create({
