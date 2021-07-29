@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native";
+import RegisteredProgramsSeparatedByDay from "./registered_programs_separated_by_day";
 
 export default function Home() {
   const onPress = () => {};
@@ -48,6 +49,7 @@ export default function Home() {
               <Text>더보기</Text>
             </TouchableWithoutFeedback>
           </View>
+          <RegisteredProgramsSeparatedByDay />
         </View>
       </View>
     </View>
