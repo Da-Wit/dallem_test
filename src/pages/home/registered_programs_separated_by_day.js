@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 export default function RegisteredProgramsSeparatedByDay() {
   const getData = () => [
@@ -26,7 +27,10 @@ export default function RegisteredProgramsSeparatedByDay() {
       <View style={styles.top}>
         <Text>예약한 프로그램</Text>
         <TouchableWithoutFeedback>
-          <Text>더보기</Text>
+          <Text style={{ color: "#FAA194" }}>
+            더보기
+            <MaterialCommunityIcons name="chevron-right" />
+          </Text>
         </TouchableWithoutFeedback>
       </View>
       {registeredProgramsSeparatedByDay.map(
