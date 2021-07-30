@@ -8,45 +8,81 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
-import styled from "styled-components";
 import RegisteredProgramsSeparatedByDay from "./registered_programs_separated_by_day";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 
-// const ShadowedView = styled(View)`
-//   box-shadow: 0px 4px 30px 0px #44444429;
-// `;
-
 export default function Main() {
   // const [isAllButtonActive,setIsAllButtonActive] = useState(false);
   const [buttons, setButtons] = useState([
-    { name: "스트레스 해소", active: true },
-    { name: "체력 증진", active: false },
-    { name: "심리안정", active: false },
+    { name: "스트레스 해소", active: true, focused: true },
+    { name: "체력 증진", active: false, focused: false },
+    { name: "심리안정", active: false, focused: false },
   ]);
+  const [allClickButton, setAllClickButton] = useState({
+    name: "전체",
+    active: false,
+    focused: false,
+  });
   const isActiveAll = (btns) =>
-    btns.filter(({ active }) => active).length === 3;
+    btns.filter(({ active }) => active).length === btns.length;
+
+  const inactivateAll = (btns) => {
+    let newButtons = JSON.parse(JSON.stringify(btns));
+    newButtons = newButtons.map((b) => ({ ...b, active: false }));
+    return newButtons;
+    // setButtons(newButtons);
+  };
+
+  const defocusAll = (btns) => {
+    let newButtons = JSON.parse(JSON.stringify(btns));
+    newButtons = newButtons.map((b) => ({ ...b, focused: false }));
+    return newButtons;
+  };
+
+  const onAllClickButtonClick = () => {
+    if (allClickButton.active) {
+      setButtons(inactivateAll(buttons));
+      setAllClickButton({ ...allClickButton, active: false, focused: false });
+      return;
+    }
+    setButtons(defocusAll(buttons));
+    setAllClickButton({ ...allClickButton, active: true, focused: true });
+    return;
+  };
+
   const onButtonClicked = (name) => {
     let newButtons = JSON.parse(JSON.stringify(buttons));
     const clickedButtonIndex = newButtons.findIndex((b) => name === b.name);
+    if (allClickButton.focused) {
+      newButtons = defocusAll(inactivateAll(newButtons));
+
+      newButtons[clickedButtonIndex].active =
+        !newButtons[clickedButtonIndex].active;
+
+      newButtons[clickedButtonIndex].focused =
+        !newButtons[clickedButtonIndex].focused;
+
+      setAllClickButton({ ...allClickButton, active: false, focused: false });
+      setButtons(newButtons);
+
+      return;
+    }
+
     newButtons[clickedButtonIndex].active =
       !newButtons[clickedButtonIndex].active;
+
+    newButtons[clickedButtonIndex].focused =
+      !newButtons[clickedButtonIndex].focused;
+
     if (isActiveAll(newButtons)) {
-      newButtons = newButtons.map((btn) => ({ ...btn, active: false }));
+      setButtons(defocusAll(newButtons));
+      setAllClickButton({ ...allClickButton, active: true, focused: true });
+      return;
     }
-    setButtons(newButtons);
-  };
 
-  const inactivateAll = () => {
-    let newButtons = JSON.parse(JSON.stringify(buttons));
-    newButtons = newButtons.map((b) => ({ ...b, active: false }));
     setButtons(newButtons);
-  };
-
-  const activateAll = () => {
-    let newButtons = JSON.parse(JSON.stringify(buttons));
-    newButtons = newButtons.map((b) => ({ ...b, active: true }));
-    setButtons(newButtons);
+    return;
   };
 
   return (
@@ -57,36 +93,30 @@ export default function Main() {
 
       <SafeAreaView style={styles.buttonsContainer}>
         <TouchableOpacity
-          onPress={() =>
-            isActiveAll(buttons) ? inactivateAll() : activateAll()
-          }
-          style={isActiveAll(buttons) ? styles.buttonActive : styles.button}
+          onPress={onAllClickButtonClick}
+          style={allClickButton.focused ? styles.focused : styles.normal}
         >
           <View>
             <Text
               style={
-                isActiveAll(buttons)
-                  ? styles.buttonTextActive
-                  : styles.buttonText
+                allClickButton.focused ? styles.focusedText : styles.normalText
               }
             >
-              전체
+              {allClickButton.name}
             </Text>
           </View>
         </TouchableOpacity>
-        {buttons.map(({ name, active }, index) => (
+        {buttons.map(({ name, focused }, index) => (
           <TouchableOpacity
             onPress={() => onButtonClicked(name)}
             key={index}
             style={[
-              active ? styles.buttonActive : styles.button,
+              focused ? styles.focused : styles.normal,
               styles.buttonMargin,
             ]}
           >
             <View>
-              <Text
-                style={active ? styles.buttonTextActive : styles.buttonText}
-              >
+              <Text style={focused ? styles.focusedText : styles.normalText}>
                 {name}
               </Text>
             </View>
@@ -143,7 +173,7 @@ const styles = StyleSheet.create({
     marginLeft: (Dimensions.get("window").width * 2.843) / 100,
   },
 
-  button: {
+  normal: {
     // height: (Dimensions.get("window").height * 3.344) / 100,
     height: 30,
     backgroundColor: "#FFFFFF",
@@ -153,7 +183,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
 
-  buttonActive: {
+  focused: {
     height: (Dimensions.get("window").height * 3.344) / 100,
     backgroundColor: "#FAA194",
     borderColor: "#FAA194",
@@ -162,13 +192,13 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
 
-  buttonText: {
+  normalText: {
     marginLeft: 30,
     marginRight: 30,
     color: "rgba(0, 0, 0, 0.6)",
   },
 
-  buttonTextActive: {
+  focusedText: {
     marginLeft: 30,
     marginRight: 30,
     color: "#FFFFFF",
