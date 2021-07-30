@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
 
   blackText: { fontSize: 18 },
   white: { color: "#FFFFFF" },
+
   joinSection: {
-    display: "flex",
     flexDirection: "row",
 
     width: "100%",
