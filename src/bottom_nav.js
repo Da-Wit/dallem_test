@@ -1,6 +1,5 @@
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import React from "react";
-import { StyleSheet } from "react-native";
 import Home from "./pages/home";
 import Register from "./pages/register";
 import RegisteredDallems from "./pages/registered_dallems";
@@ -89,12 +88,3 @@ export default function BottomNav() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFFFFF",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

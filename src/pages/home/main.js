@@ -8,9 +8,14 @@ import {
   TouchableOpacity,
   SafeAreaView,
 } from "react-native";
+import styled from "styled-components";
 import RegisteredProgramsSeparatedByDay from "./registered_programs_separated_by_day";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
+
+// const ShadowedView = styled(View)`
+//   box-shadow: 0px 4px 30px 0px #44444429;
+// `;
 
 export default function Main() {
   // const [isAllButtonActive,setIsAllButtonActive] = useState(false);
@@ -49,6 +54,7 @@ export default function Main() {
       <View style={styles.titleContainer}>
         <Text style={styles.title}>프로그램 예약</Text>
       </View>
+
       <SafeAreaView style={styles.buttonsContainer}>
         <TouchableOpacity
           onPress={() =>
@@ -93,14 +99,18 @@ export default function Main() {
           <Text>어느 일정에{"\n"}참여하고 싶으세요?</Text>
           <Text style={styles.grayText}>일정별 예약</Text>
 
-          <MaterialCommunityIcons name="calendar" size={40} />
+          <MaterialCommunityIcons
+            name="calendar"
+            style={styles.tinySymbol}
+            size={40}
+          />
         </View>
 
         <View style={styles.howRegister}>
           <Text>어느 프로그램에{"\n"}참여하고 싶으세요?</Text>
           <Text style={styles.grayText}>프로그램별 예약</Text>
           <Image
-            style={styles.tinySymbol}
+            style={[styles.tinySymbol, styles.imageResize]}
             source={require("../../../images/dallem.png")}
           />
         </View>
@@ -126,8 +136,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     overflow: "scroll",
-    marginBottom: 0,
-    paddingBottom: 0,
+    marginBottom: (Dimensions.get("window").height * 2.341) / 100,
   },
 
   buttonMargin: {
@@ -173,18 +182,17 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
   tinySymbol: {
-    // 아래 4 줄은 비율을 유지하며 리사이징하기 위한 코드
+    width: (Dimensions.get("window").width * 9.478) / 100,
+    marginTop: (Dimensions.get("window").height * 4.57) / 100,
+    height: (Dimensions.get("window").height * 3.79) / 100,
+  },
+
+  imageResize: {
     flex: 1,
     width: null,
     height: null,
     resizeMode: "contain",
-
-    width: (Dimensions.get("window").width * 9.478) / 100,
-    marginTop: (Dimensions.get("window").height * 4.57) / 100,
-
-    // height: (Dimensions.get("window").height * 3.79) / 100,
   },
-
   howRegisterContainer: {
     height: (Dimensions.get("window").height * 22.742) / 100,
     marginLeft: (Dimensions.get("window").width * 4.739) / 100,
@@ -193,8 +201,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     justifyContent: "space-between",
+    marginBottom: (Dimensions.get("window").height * 3.121) / 100,
   },
-  grayText: { color: "rgba(0, 0, 0, 0.6)" },
+  grayText: {
+    color: "rgba(0, 0, 0, 0.6)",
+    marginTop: (Dimensions.get("window").height * 1.449) / 100,
+    fontSize: 12,
+  },
 
   howRegister: {
     width: (Dimensions.get("window").width * 42.18) / 100,
@@ -204,5 +217,11 @@ const styles = StyleSheet.create({
     paddingTop: (Dimensions.get("window").height * 3.344) / 100,
     paddingLeft: (Dimensions.get("window").width * 4.739) / 100,
     paddingRight: (Dimensions.get("window").width * 4.739) / 100,
+    borderRadius: 8,
+    shadowColor: "#444444",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.16,
+    shadowRadius: 30,
+    elevation: 4,
   },
 });

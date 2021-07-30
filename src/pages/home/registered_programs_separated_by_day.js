@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
@@ -25,9 +26,9 @@ export default function RegisteredProgramsSeparatedByDay() {
   return (
     <View style={styles.container}>
       <View style={styles.top}>
-        <Text>예약한 프로그램</Text>
+        <Text style={styles.title}>예약한 프로그램</Text>
         <TouchableWithoutFeedback>
-          <Text style={{ color: "#FAA194" }}>
+          <Text style={styles.detail}>
             더보기
             <MaterialCommunityIcons name="chevron-right" />
           </Text>
@@ -36,7 +37,7 @@ export default function RegisteredProgramsSeparatedByDay() {
       {registeredProgramsSeparatedByDay.map(
         ({ date: { year, month, day, dayOfTheWeek }, programs }, dayIndex) => (
           <View style={styles.dayContainer} key={dayIndex}>
-            <Text>
+            <Text style={styles.date}>
               {year}년 {month}월 {day}일 {dayOfTheWeek}요일
             </Text>
             {programs.map(({ programName, hour, minute }, programIndex) => (
@@ -60,8 +61,46 @@ export default function RegisteredProgramsSeparatedByDay() {
 }
 
 const styles = StyleSheet.create({
-  container: {},
-  top: {},
+  container: {
+    width: (Dimensions.get("window").width * 88.625) / 100,
+    marginLeft: (Dimensions.get("window").width * 4.739) / 100,
+    marginRight: (Dimensions.get("window").width * 4.739) / 100,
+    marginBottom: (Dimensions.get("window").height * 4.793) / 100,
+
+    paddingLeft: (Dimensions.get("window").width * 4.739) / 100,
+    paddingRight: (Dimensions.get("window").width * 4.739) / 100,
+
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
+  },
+  top: {
+    flexDirection: "row",
+  },
+
+  title: {
+    fontWeight: "700",
+    fontSize: 16,
+    marginTop: (Dimensions.get("window").height * 2.898) / 100,
+  },
+
+  detail: {
+    color: "#FAA194",
+    fontWeight: "500",
+    position: "absolute",
+    right: (Dimensions.get("window").width * 4.739) / 100,
+    marginTop: (Dimensions.get("window").height * 3.344) / 100,
+  },
+  date: {
+    fontWeight: "500",
+  },
   dayContainer: {},
   programContainer: {},
   programTime: {},

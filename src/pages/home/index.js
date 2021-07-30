@@ -1,19 +1,21 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { SafeAreaView, ScrollView, StyleSheet } from "react-native";
 import Top from "./top";
 import Main from "./main";
 
 export default function Home() {
   return (
-    <View style={styles.homeContainer}>
-      <Top />
-      <Main />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <Top />
+        <Main />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  homeContainer: {
+  container: {
     flex: 1,
     backgroundColor: "#ffffff",
     alignItems: "center",
