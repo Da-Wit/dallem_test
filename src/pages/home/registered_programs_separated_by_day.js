@@ -9,6 +9,12 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
+const DateText = ({ year, month, day, dayOfTheWeek }) => (
+  <Text style={styles.date}>
+    {year}년 {month}월 {day}일 {dayOfTheWeek}요일
+  </Text>
+);
+
 export default function RegisteredProgramsSeparatedByDay() {
   const getData = () => [
     {
@@ -20,7 +26,6 @@ export default function RegisteredProgramsSeparatedByDay() {
     },
   ];
 
-  //   const registeredProgramsSeparatedByDay = useMemo(() => getData(), [getData]);
   const registeredProgramsSeparatedByDay = getData();
 
   return (
@@ -37,22 +42,32 @@ export default function RegisteredProgramsSeparatedByDay() {
       {registeredProgramsSeparatedByDay.map(
         ({ date: { year, month, day, dayOfTheWeek }, programs }, dayIndex) => (
           <View style={styles.dayContainer} key={dayIndex}>
-            <Text style={styles.date}>
-              {year}년 {month}월 {day}일 {dayOfTheWeek}요일
-            </Text>
-            {programs.map(({ programName, hour, minute }, programIndex) => (
-              <View style={styles.programContainer} key={programIndex}>
-                <Text style={styles.programTime}>
-                  {hour}:{minute}
-                </Text>
-                <Text style={styles.programName}>{programName}</Text>
-                <TouchableOpacity>
-                  <View>
-                    <Text style={styles.programRegisterBtn}>참가</Text>
+            <DateText
+              year={year}
+              month={month}
+              day={day}
+              dayOfTheWeek={dayOfTheWeek}
+            />
+
+            <View style={styles.programsContainer}>
+              {programs.map(({ programName, hour, minute }, programIndex) => (
+                <View style={styles.programContainer} key={programIndex}>
+                  <View style={styles.textesContainer}>
+                    <Text style={styles.programTime}>
+                      {hour}:{minute}
+                    </Text>
+                    <Text style={styles.programName}>{programName}</Text>
                   </View>
-                </TouchableOpacity>
-              </View>
-            ))}
+                  <View style={styles.RegisterBtnContainer}>
+                    <TouchableOpacity style={styles.RegisterBtn}>
+                      <View>
+                        <Text style={styles.RegisterBtnText}>참가</Text>
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))}
+            </View>
           </View>
         )
       )}
@@ -78,7 +93,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
   },
   top: {
@@ -88,22 +102,63 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "700",
     fontSize: 16,
-    marginTop: (Dimensions.get("window").height * 2.898) / 100,
+    marginTop: (Dimensions.get("window").height * 5) / 100,
+    flex: 1,
   },
 
   detail: {
     color: "#FAA194",
     fontWeight: "500",
-    position: "absolute",
-    right: (Dimensions.get("window").width * 4.739) / 100,
-    marginTop: (Dimensions.get("window").height * 3.344) / 100,
+    marginTop: (Dimensions.get("window").height * 5.3) / 100,
   },
+
   date: {
     fontWeight: "500",
+    fontSize: 13,
   },
-  dayContainer: {},
-  programContainer: {},
+  dayContainer: {
+    marginTop: (Dimensions.get("window").height * 2.006) / 100,
+  },
+
+  programsContainer: {
+    marginTop: (Dimensions.get("window").height * 1.003) / 100,
+    paddingBottom: 20,
+  },
+
+  programContainer: {
+    flexDirection: "row",
+
+    paddingBottom: (Dimensions.get("window").height * 1.449) / 100,
+    borderBottomColor: "rgba(0, 0, 0, 0.16)",
+    borderBottomWidth: 1,
+  },
+
+  textesContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
   programTime: {},
-  programName: {},
-  programRegisterBtn: {},
+  programName: {
+    marginLeft: (Dimensions.get("window").width * 3.791) / 100,
+  },
+  RegisterBtn: {
+    paddingLeft: 15.5 * 1.5,
+    paddingRight: 15.5 * 1.5,
+    paddingTop: 4 * 1.5,
+    paddingBottom: 4 * 1.5,
+
+    borderRadius: 165,
+    backgroundColor: "#172B39",
+  },
+  RegisterBtnContainer: {
+    paddingRight: (Dimensions.get("window").width * 3.672) / 100,
+    paddingTop: (Dimensions.get("window").height * 3.455) / 100,
+  },
+
+  RegisterBtnText: {
+    color: "#FFFFFF",
+    fontWeight: "500",
+  },
 });

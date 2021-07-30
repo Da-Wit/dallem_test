@@ -10,7 +10,6 @@ import {
   ScrollView,
 } from "react-native";
 import RegisteredProgramsSeparatedByDay from "./registered_programs_separated_by_day";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 
 export default function Main() {
@@ -18,9 +17,6 @@ export default function Main() {
     { name: "스트레스 해소", active: true, focused: true },
     { name: "체력 증진", active: false, focused: false },
     { name: "심리안정", active: false, focused: false },
-    { name: "심리안정2", active: false, focused: false },
-    { name: "심리안정3", active: false, focused: false },
-    { name: "심리안정4", active: false, focused: false },
   ]);
   const [allClickButton, setAllClickButton] = useState({
     name: "전체",
@@ -94,17 +90,12 @@ export default function Main() {
       </View>
 
       <SafeAreaView style={styles.buttonsContainer}>
-        <ScrollView
-          horizontal={true}
-          // decelerationRate={0}
-          // snapToInterval={200} //your element width
-          // snapToAlignment={"center"}
-        >
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
           <TouchableOpacity
             onPress={onAllClickButtonClick}
             style={allClickButton.focused ? styles.focused : styles.normal}
           >
-            <View>
+            <View style={styles.textAligner}>
               <Text
                 style={
                   allClickButton.focused
@@ -126,7 +117,7 @@ export default function Main() {
                 styles.buttonMargin,
               ]}
             >
-              <View>
+              <View style={styles.textAligner}>
                 <Text style={focused ? styles.focusedText : styles.normalText}>
                   {name}
                 </Text>
@@ -140,11 +131,9 @@ export default function Main() {
         <View style={styles.howRegister}>
           <Text>어느 일정에{"\n"}참여하고 싶으세요?</Text>
           <Text style={styles.grayText}>일정별 예약</Text>
-
-          <MaterialCommunityIcons
-            name="calendar"
-            style={styles.tinySymbol}
-            size={40}
+          <Image
+            style={[styles.imageResize, styles.tinySymbol]}
+            source={require("../../../images/calendar.png")}
           />
         </View>
 
@@ -185,9 +174,14 @@ const styles = StyleSheet.create({
     marginLeft: (Dimensions.get("window").width * 2.843) / 100,
   },
 
+  textAligner: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
+
   normal: {
-    // height: (Dimensions.get("window").height * 3.344) / 100,
-    height: 30,
+    height: (Dimensions.get("window").height * 3.344) / 100,
     backgroundColor: "#FFFFFF",
     borderColor: "#C2C2C2",
     borderStyle: "solid",
@@ -231,9 +225,6 @@ const styles = StyleSheet.create({
 
   imageResize: {
     resizeMode: "contain",
-    // width: (Dimensions.get("window").width * 9.478) / 100,
-    // marginTop: (Dimensions.get("window").height * 4.57) / 100,
-    // height: (Dimensions.get("window").height * 3.901) / 100,
   },
   howRegisterContainer: {
     height: (Dimensions.get("window").height * 22.742) / 100,
