@@ -7,17 +7,20 @@ import {
   Dimensions,
   TouchableOpacity,
   SafeAreaView,
+  ScrollView,
 } from "react-native";
 import RegisteredProgramsSeparatedByDay from "./registered_programs_separated_by_day";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useState } from "react";
 
 export default function Main() {
-  // const [isAllButtonActive,setIsAllButtonActive] = useState(false);
   const [buttons, setButtons] = useState([
     { name: "스트레스 해소", active: true, focused: true },
     { name: "체력 증진", active: false, focused: false },
     { name: "심리안정", active: false, focused: false },
+    { name: "심리안정2", active: false, focused: false },
+    { name: "심리안정3", active: false, focused: false },
+    { name: "심리안정4", active: false, focused: false },
   ]);
   const [allClickButton, setAllClickButton] = useState({
     name: "전체",
@@ -31,7 +34,6 @@ export default function Main() {
     let newButtons = JSON.parse(JSON.stringify(btns));
     newButtons = newButtons.map((b) => ({ ...b, active: false }));
     return newButtons;
-    // setButtons(newButtons);
   };
 
   const defocusAll = (btns) => {
@@ -92,36 +94,46 @@ export default function Main() {
       </View>
 
       <SafeAreaView style={styles.buttonsContainer}>
-        <TouchableOpacity
-          onPress={onAllClickButtonClick}
-          style={allClickButton.focused ? styles.focused : styles.normal}
+        <ScrollView
+          horizontal={true}
+          // decelerationRate={0}
+          // snapToInterval={200} //your element width
+          // snapToAlignment={"center"}
         >
-          <View>
-            <Text
-              style={
-                allClickButton.focused ? styles.focusedText : styles.normalText
-              }
-            >
-              {allClickButton.name}
-            </Text>
-          </View>
-        </TouchableOpacity>
-        {buttons.map(({ name, focused }, index) => (
           <TouchableOpacity
-            onPress={() => onButtonClicked(name)}
-            key={index}
-            style={[
-              focused ? styles.focused : styles.normal,
-              styles.buttonMargin,
-            ]}
+            onPress={onAllClickButtonClick}
+            style={allClickButton.focused ? styles.focused : styles.normal}
           >
             <View>
-              <Text style={focused ? styles.focusedText : styles.normalText}>
-                {name}
+              <Text
+                style={
+                  allClickButton.focused
+                    ? styles.focusedText
+                    : styles.normalText
+                }
+              >
+                {allClickButton.name}
               </Text>
             </View>
           </TouchableOpacity>
-        ))}
+
+          {buttons.map(({ name, focused }, index) => (
+            <TouchableOpacity
+              onPress={() => onButtonClicked(name)}
+              key={index}
+              style={[
+                focused ? styles.focused : styles.normal,
+                styles.buttonMargin,
+              ]}
+            >
+              <View>
+                <Text style={focused ? styles.focusedText : styles.normalText}>
+                  {name}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
       </SafeAreaView>
 
       <View style={styles.howRegisterContainer}>
