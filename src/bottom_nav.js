@@ -6,6 +6,7 @@ import RegisteredDallems from "./pages/registered_dallems";
 import MyPage from "./pages/my_page";
 import { NavigationContainer } from "@react-navigation/native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Dimensions } from "react-native";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -19,15 +20,14 @@ export default function BottomNav() {
         inactiveColor="#172B39"
         barStyle={{
           backgroundColor: "#FFFFFF",
-          paddingTop: 15,
-          paddingBottom: 15,
+          paddingTop: (Dimensions.get("window").height * 2.006) / 100,
+          paddingBottom: (Dimensions.get("window").height * 1.672) / 100,
 
           borderColor: "#E9E9E9",
           borderWidth: 1,
           borderStyle: "solid",
 
-          display: "flex",
-          justifyContent: "space-evenly",
+          // TODO justifyContent: "space-around" 적용하기,
         }}
       >
         <Tab.Screen
