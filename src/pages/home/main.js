@@ -110,7 +110,7 @@ export default function Main() {
           <Text>어느 프로그램에{"\n"}참여하고 싶으세요?</Text>
           <Text style={styles.grayText}>프로그램별 예약</Text>
           <Image
-            style={[styles.tinySymbol, styles.imageResize]}
+            style={[styles.imageResize, styles.tinySymbol]}
             source={require("../../../images/dallem.png")}
           />
         </View>
@@ -184,14 +184,14 @@ const styles = StyleSheet.create({
   tinySymbol: {
     width: (Dimensions.get("window").width * 9.478) / 100,
     marginTop: (Dimensions.get("window").height * 4.57) / 100,
-    height: (Dimensions.get("window").height * 3.79) / 100,
+    height: (Dimensions.get("window").height * 3.901) / 100,
   },
 
   imageResize: {
-    flex: 1,
-    width: null,
-    height: null,
     resizeMode: "contain",
+    // width: (Dimensions.get("window").width * 9.478) / 100,
+    // marginTop: (Dimensions.get("window").height * 4.57) / 100,
+    // height: (Dimensions.get("window").height * 3.901) / 100,
   },
   howRegisterContainer: {
     height: (Dimensions.get("window").height * 22.742) / 100,
@@ -212,12 +212,14 @@ const styles = StyleSheet.create({
   howRegister: {
     width: (Dimensions.get("window").width * 42.18) / 100,
     backgroundColor: "#FFFFFF",
-    // backgroundColor: "blue",
     height: "100%",
     paddingTop: (Dimensions.get("window").height * 3.344) / 100,
     paddingLeft: (Dimensions.get("window").width * 4.739) / 100,
     paddingRight: (Dimensions.get("window").width * 4.739) / 100,
     borderRadius: 8,
+
+    alignContent: "flex-start",
+
     shadowColor: "#444444",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.16,
